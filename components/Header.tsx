@@ -99,7 +99,7 @@ const Header: React.FC<HeaderProps> = ({ pageTitle, toggleSidebar, setIsSearchOp
                      </div>
                      <div>
                          <p className="text-xs text-brand-text-secondary">Selamat Datang</p>
-                         <p className="font-bold text-brand-text-light -mt-1">{currentUser?.fullName.split(' ')[0]}</p>
+                         <p className="font-bold text-brand-text-light -mt-1">{currentUser?.fullName?.split(' ')[0] || 'User'}</p>
                      </div>
                  </div>
             </div>

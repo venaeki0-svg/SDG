@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ViewType, Client, Project, TeamMember, Transaction, Package, AddOn, TeamProjectPayment, Profile, FinancialPocket, TeamPaymentRecord, Lead, RewardLedgerEntry, User, Card, Asset, ClientFeedback, Contract, RevisionStatus, NavigationAction, Notification, SocialMediaPost, PromoCode, SOP } from './types';
 import { MOCK_CLIENTS, MOCK_PROJECTS, MOCK_TEAM_MEMBERS, MOCK_TRANSACTIONS, MOCK_PACKAGES, MOCK_ADDONS, MOCK_TEAM_PROJECT_PAYMENTS, MOCK_USER_PROFILE, MOCK_FINANCIAL_POCKETS, MOCK_TEAM_PAYMENT_RECORDS, MOCK_LEADS, MOCK_REWARD_LEDGER_ENTRIES, MOCK_USERS, MOCK_CARDS, MOCK_ASSETS, MOCK_CLIENT_FEEDBACK, MOCK_CONTRACTS, MOCK_NOTIFICATIONS, MOCK_SOCIAL_MEDIA_POSTS, MOCK_PROMO_CODES, MOCK_SOPS, HomeIcon, FolderKanbanIcon, UsersIcon, DollarSignIcon, PlusIcon } from './constants';
+import { useAuth } from './hooks/useAuth';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import Leads from './components/Leads';
@@ -100,6 +101,7 @@ const FloatingActionButton: React.FC<{ onAddClick: (type: string) => void }> = (
 
 
 const App: React.FC = () => {
+  const { login } = useAuth();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [activeView, setActiveView] = useState<ViewType>(ViewType.DASHBOARD);
@@ -499,7 +501,7 @@ const App: React.FC = () => {
   }
   
   if (!isAuthenticated) {
-    return <Login onLoginSuccess={handleLoginSuccess} users={users} />;
+    return <Login onLoginSuccess={login} />;
   }
 
   return (
