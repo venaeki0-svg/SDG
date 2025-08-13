@@ -101,7 +101,6 @@ const FloatingActionButton: React.FC<{ onAddClick: (type: string) => void }> = (
 
 
 const App: React.FC = () => {
-  const { login } = useAuth();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [activeView, setActiveView] = useState<ViewType>(ViewType.DASHBOARD);
@@ -501,7 +500,7 @@ const App: React.FC = () => {
   }
   
   if (!isAuthenticated) {
-    return <Login onLoginSuccess={login} />;
+    return <Login onLoginSuccess={handleLoginSuccess} />;
   }
 
   return (

@@ -25,7 +25,7 @@ const EyeOffIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 
 interface LoginProps {
-    onLoginSuccess: (email: string, password: string) => Promise<void>;
+    onLoginSuccess: (user: User) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
@@ -34,23 +34,28 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    
+    // Mock users for login
+    const mockUsers = [
+        { id: 'USR001', email: 'admin@venapictures.com', password: 'admin123', fullName: 'Admin Vena Pictures', role: 'Admin' as const, permissions: undefined },
+        { id: 'USR002', email: 'member@venapictures.com', password: 'member123', fullName: 'Member Vena Pictures', role: 'Member' as const, permissions: ['Manajemen Klien', 'Proyek'] as any[] }
+    ];
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
         setIsLoading(true);
 
-        onLoginSuccess(email, password)
-            .then(() => {
-                // Success handled in parent component
-            })
-            .catch((error) => {
+        // Simple mock authentication
+        setTimeout(() => {
+            const user = mockUsers.find(u => u.email === email && u.password === password);
+            if (user) {
+                onLoginSuccess(user);
+            } else {
                 setError('Username atau kata sandi salah.');
-                console.error('Login error:', error);
-            })
-            .finally(() => {
+            }
             setIsLoading(false);
-            });
+        }, 500);
     };
 
     return (
@@ -115,9 +120,11 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                         </div>
                     </form>
                     <div className="text-center mt-6">
-                        <a href="#/verify" className="text-sm text-slate-500 hover:text-blue-600 transition-colors">
-                            Verifikasi Dokumen Digital
-                        </a>
+                        <div className="text-xs text-slate-500 space-y-1">
+                            <p><strong>Demo Login:</strong></p>
+                            <p>Admin: admin@venapictures.com / admin123</p>
+                            <p>Member: member@venapictures.com / member123</p>
+                        </div>
                     </div>
                  </div>
             </div>
